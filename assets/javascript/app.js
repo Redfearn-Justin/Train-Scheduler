@@ -12,12 +12,11 @@ $(document).ready(function() {
   };
 
   firebase.initializeApp(config);
+  
 
   //Global variables
 
   var database = firebase.database();
-
-  var currentTime = moment().format('LT'); //this is an attempt to eventually use the local time to alter table data
 
 
   //functions
@@ -31,8 +30,6 @@ $(document).ready(function() {
     });
 
   }
-
-
 
   //on-click functions
 
@@ -61,8 +58,6 @@ $(document).ready(function() {
 
     };
 
-    console.log(totalUserInput);
-
     //upload object to firebase
 
     database.ref().push(totalUserInput);
@@ -73,13 +68,13 @@ $(document).ready(function() {
     clearFields();
 
 
-  }); 
-  
-  //function to push data that's on DB to website
+  });
+
+  //function to push data that's on DB, to website
 
   database.ref().on("child_added", function(snapshot) {
 
-    //storing information into variables
+    //storing information from DB into variables
 
     var databaseName = snapshot.val().Name;
 
@@ -89,29 +84,31 @@ $(document).ready(function() {
 
     var databaseTime = snapshot.val().Time;
 
-    //verifying results in console
-
-    console.log(databaseName + " " + databaseDestination + " " + databaseTime + " " + databaseFrequency);
 
     //enter math calcuations below, for both "Time" and "Mins Away"
 
-    databaseTime.moment()
+    var timeConvert = moment(databaseTime, "HH:mm"); //turn the time value into the desired format
 
-    //var mthsPassed = moment().diff(empDate, "months");
+    var timeDifference = moment().diff(moment(timeConvert), "minutes"); // this is to get the time difference from the databaseTime variable - in minutes
+
+    var modulusRemainder = timeDifference % databaseFrequency; //this is to get the modulus remainder from the time difference, based on the frequency input
+
+    var minsAway = databaseFrequency - modulusRemainder; // this is to get the "mins away" the train is by subtracting the modulus remainder from the database frequency input
+
+    var nextArrivalTime = moment().add(minsAway, "minutes"); // add the time difference, in minute format, to the variable
 
 
+    var newEntry = $("<tr>").append(
 
-    var newRow = $("<tr>").append( 
-
-      $("<th>").text(databaseName), 
-      $("<td>").text(databaseDestination), 
+      $("<th>").text(databaseName),
+      $("<td>").text(databaseDestination),
       $("<td>").text(databaseFrequency),
-      $("<td>").text(), //enter new variable for math here
-      $("<td>").text(), //enter new variable with math for 'minutes until'
-    
+      $("<td>").text(moment(nextArrivalTime).format("HH:mm")), //formatting the time to read in 24-hour format
+      $("<td>").text(minsAway),
+
     );
 
-    $("table").append(newRow);
+    $("table").append(newEntry);
 
 
     }, function(errorObject) {
@@ -121,4 +118,3 @@ $(document).ready(function() {
   }); //close database ref function
 
 }); // close document ready
-  
