@@ -1,6 +1,6 @@
-# Train-Scheduler
+# Sodor Train Scheduler
 
-![gif1](https://media.giphy.com/media/TlK63EWh6J1puKmzYmQ/giphy.gif)
+![gif1](https://media.giphy.com/media/ti98I4f9Mhdba/giphy.gif)
 
 ## Overview
 
