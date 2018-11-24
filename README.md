@@ -21,4 +21,4 @@
 2) Once done, this information will be sent to the database, where it will then calculate when the train will arrive next, as well as how far the train is away.
 3) After completion, pack your bags!
 
-![gif2](https://media.giphy.com/media/FaEH7H1pxB79K/giphy.gif)
+![gif2](https://media.giphy.com/media/9VVYCXeoJENUs/giphy.gif)
