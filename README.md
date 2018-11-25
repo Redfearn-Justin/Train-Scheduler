@@ -13,7 +13,7 @@
 ### Technologies Utilized
 
 * **Backend**: Firebase
-* **Frontend**: HTML, CSS, Javascript, Bootstrap
+* **Frontend**: HTML, CSS, Javascript, jQuery, Bootstrap
 
 ## Instructions
 
